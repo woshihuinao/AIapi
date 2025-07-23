@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单AI系统</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .api-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+        }
+        input, button {
+            padding: 8px 12px;
+            margin: 5px 0;
+        }
+        input[type="text"] {
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .chat-area {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            min-height: 200px;
+            background-color: #fafafa;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: 20%;
+            text-align: right;
+        }
+        .ai-message {
+            background-color: #f1f1f1;
+            margin-right: 20%;
+        }
+        .error {
+            color: red;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>简单AI系统</h1>
+        
+        <div class="api-section">
+            <h3>输入API密钥激活AI</h3>
+            <input type="text" id="api-key" placeholder="输入API密钥...">
+            <button onclick="setApiKey()">激活</button>
+            <p id="api-status">状态: 未激活</p>
+        </div>
+        
+        <div id="chat-section" style="display: none;">
+            <div class="chat-area" id="chat-area">
+                <div class="message ai-message">AI: 我已激活，请问有什么可以帮助您的？</div>
+            </div>
+            <input type="text" id="user-input" placeholder="输入您的问题..." style="width: 80%;">
+            <button onclick="sendMessage()">发送</button>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载时弹出"1234567890"
+        window.onload = function() {
+            alert("1234567890");
+        };
+
+        // 存储API密钥
+        let apiKey = null;
+        // 预定义的API密钥列表（实际应用中应该从服务器验证）
+        const validApiKeys = ["AI123456", "API7890", "SECRETKEY", "OPENAI2023"];
+        
+        // 设置API密钥
+        function setApiKey() {
+            const inputKey = document.getElementById('api-key').value.trim();
+            if (validApiKeys.includes(inputKey)) {
+                apiKey = inputKey;
+                document.getElementById('api-status').textContent = "状态: 已激活";
+                document.getElementById('chat-section').style.display = "block";
+            } else {
+                alert("无效的API密钥！");
+            }
+        }
+        
+        // 发送消息
+        function sendMessage() {
+            if (!apiKey) {
+                alert("请先输入有效的API密钥！");
+                return;
+            }
+            
+            const userInput = document.getElementById('user-input').value.trim();
+            if (userInput === "") return;
+            
+            // 添加用户消息到聊天区
+            const chatArea = document.getElementById('chat-area');
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = "你: " + userInput;
+            chatArea.appendChild(userMessage);
+            
+            // 清空输入框
+            document.getElementById('user-input').value = "";
+            
+            // 模拟AI回复（简单回应）
+            setTimeout(function() {
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'message ai-message';
+                aiMessage.textContent = "AI: 我已收到你的消息: '" + userInput + "'";
+                chatArea.appendChild(aiMessage);
+                
+                // 滚动到最新消息
+                chatArea.scrollTop = chatArea.scrollHeight;
+            }, 500);
+        }
+        
+        // 按回车键也可以发送消息
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+      </html>
