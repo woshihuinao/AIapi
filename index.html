@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简单AI系统</title>
+    <title>Kimi AI系统</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -77,51 +77,51 @@
 </head>
 <body>
     <div class="container">
-        <h1>简单AI系统</h1>
+        <h1>Kimi AI系统</h1>
         
         <div class="api-section">
-            <h3>输入API密钥激活AI</h3>
-            <input type="text" id="api-key" placeholder="输入API密钥...">
+            <h3>输入Kimi API密钥激活</h3>
+            <input type="text" id="api-key" placeholder="输入Kimi API密钥...">
             <button onclick="setApiKey()">激活</button>
             <p id="api-status">状态: 未激活</p>
         </div>
         
         <div id="chat-section" style="display: none;">
             <div class="chat-area" id="chat-area">
-                <div class="message ai-message">AI: 我已激活，请问有什么可以帮助您的？</div>
+                <div class="message ai-message">Kimi: 你好！我是Kimi，有什么可以帮你的吗？</div>
             </div>
-            <input type="text" id="user-input" placeholder="输入您的问题..." style="width: 80%;">
+            <input type="text" id="user-input" placeholder="输入你的问题..." style="width: 80%;">
             <button onclick="sendMessage()">发送</button>
         </div>
     </div>
 
     <script>
-        // 页面加载时弹出"有BUG联系邮箱19993544096@163.com"
+        // 页面加载时弹出联系方式
         window.onload = function() {
-            alert("有BUG联系邮箱19993544096@163.com");
+            alert("有 BUG 联系邮箱 19993544096@163.com");
         };
 
         // 存储API密钥
         let apiKey = null;
-        // 预定义的API密钥列表（实际应用中应该从服务器验证）
-        const validApiKeys = ["AI123456", "API7890", "SECRETKEY", "OPENAI2023"];
+        // 只接受Kimi的密钥
+        const validApiKeys = ["kimi123", "kimi456", "kimi789"];
         
         // 设置API密钥
         function setApiKey() {
             const inputKey = document.getElementById('api-key').value.trim();
             if (validApiKeys.includes(inputKey)) {
                 apiKey = inputKey;
-                document.getElementById('api-status').textContent = "状态: 已激活";
+                document.getElementById('api-status').textContent = "状态: 已激活 (Kimi)";
                 document.getElementById('chat-section').style.display = "block";
             } else {
-                alert("无效的API密钥！");
+                alert("无效的Kimi API密钥！");
             }
         }
         
         // 发送消息
         function sendMessage() {
             if (!apiKey) {
-                alert("请先输入有效的API密钥！");
+                alert("请先输入有效的Kimi API密钥！");
                 return;
             }
             
@@ -138,11 +138,20 @@
             // 清空输入框
             document.getElementById('user-input').value = "";
             
-            // 模拟AI回复（简单回应）
+            // 模拟Kimi回复
             setTimeout(function() {
                 const aiMessage = document.createElement('div');
                 aiMessage.className = 'message ai-message';
-                aiMessage.textContent = "AI: 我已收到你的消息: '" + userInput + "'";
+                
+                // 简单回复逻辑
+                if (userInput.includes("你好") || userInput.includes("hi") || userInput.includes("hello")) {
+                    aiMessage.textContent = "Kimi: 你好！我是Kimi，很高兴为你服务！";
+                } else if (userInput.includes("帮助") || userInput.includes("help")) {
+                    aiMessage.textContent = "Kimi: 我可以回答简单问题，请告诉我你需要什么帮助？";
+                } else {
+                    aiMessage.textContent = "Kimi: 我理解你说的是: " + userInput + "。这是我基于Kimi的回复。";
+                }
+                
                 chatArea.appendChild(aiMessage);
                 
                 // 滚动到最新消息
